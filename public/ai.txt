@@ -1,0 +1,7 @@
+# ai.txt — AI usage policy for this site
+
+Allow: none
+
+Training: no
+Scraping: no
+Indexing: no
