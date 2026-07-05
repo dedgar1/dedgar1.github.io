@@ -67,6 +67,11 @@ a:hover {
 p {
 	margin-bottom: 1em;
 }
+.prose {
+  max-width: 680px;       /* sweet spot for reading — ~65-75 characters per line */
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
 .prose p {
 	margin-bottom: 2em;
 }
