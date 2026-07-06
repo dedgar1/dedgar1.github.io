@@ -7,12 +7,10 @@ import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import { readingTime } from "../utils/readingTime";
 
-type Props = CollectionEntry<"blog">;
+type Props = CollectionEntry<"blog">["data"] & { body?: string };
 
-const {
-	data: { title, description, pubDate, updatedDate, heroImage },
-	body,
-} = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, body } =
+	Astro.props;
 const time = readingTime(body ?? "");
 ---
 
