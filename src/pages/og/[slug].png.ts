@@ -1,10 +1,10 @@
 import { getCollection } from 'astro:content';
-import { ImageResponse } from '@astrojs/og';
+import { ImageResponse } from '@vercel/og';
 
 export async function getStaticPaths() {
     const posts = await getCollection('blog');
     return posts.map((post) => ({
-        params: { slug: post.slug },
+        params: { slug: post.id },
         props: { post },
     }));
 }
