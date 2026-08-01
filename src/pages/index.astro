@@ -3,6 +3,16 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { getCollection } from "astro:content";
+
+const allBlogPosts = await getCollection("blog");
+const sortedPosts = allBlogPosts
+	.sort(
+		(a, b) =>
+			new Date(b.data.pubDate).valueOf() -
+			new Date(a.data.pubDate).valueOf(),
+	)
+	.slice(0, 5);
 ---
 
 <!doctype html>
@@ -13,15 +23,155 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 	<body>
 		<Header />
 		<main>
-			<h1>📨 You found stray packets!</h1>
-			<p>
-				I'm a software engineer with over a decade of experience working
-				on web, mobile, crypto and everything in between. Stray packets
-				is the place where I share stray thoughts, tech musings with the
-				hope that these words <s>written on paper</s> displayed on your screen
-				will help or entertain you..
-			</p>
+			<!-- Hero Section -->
+			<section class="hero">
+				<div class="hero-content">
+					<h1>📨 You found stray packets!</h1>
+					<p class="intro">
+						I'm Edgar Nzokwe, a software engineer with over a decade
+						of experience working on web, mobile, crypto and
+						everything in between. Stray packets is the place where
+						I share stray thoughts, tech musings with the hope that
+						these words <s>written on paper</s> displayed on your screen
+						will help or entertain you.
+					</p>
+				</div>
+			</section>
+
+			<!-- Recent Posts Section -->
+			{
+				sortedPosts.length > 0 && (
+					<section class="recent-posts">
+						<h2>Latest Posts</h2>
+						<ul class="posts-list">
+							{sortedPosts.map((post) => (
+								<li class="post-card">
+									<a href={`/blog/${post.id}`}>
+										<h3>{post.data.title}</h3>
+										<p class="post-date">
+											{new Date(
+												post.data.pubDate,
+											).toLocaleDateString()}
+										</p>
+										{post.data.description && (
+											<p class="post-description">
+												{post.data.description}
+											</p>
+										)}
+									</a>
+								</li>
+							))}
+						</ul>
+						<a href="/blog" class="view-all">
+							View all posts →
+						</a>
+					</section>
+				)
+			}
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 40px 20px;
+	}
+
+	.hero {
+		margin-bottom: 60px;
+		text-align: center;
+	}
+
+	.hero h1 {
+		font-size: 2.5rem;
+		margin-bottom: 20px;
+	}
+
+	.intro {
+		font-size: 1.1rem;
+		line-height: 1.7;
+		color: var(--text-secondary, #666);
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	.recent-posts {
+		margin-top: 60px;
+	}
+
+	.recent-posts h2 {
+		font-size: 1.8rem;
+		margin-bottom: 30px;
+		text-align: center;
+	}
+
+	.posts-list {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 30px 0;
+	}
+
+	.post-card {
+		margin-bottom: 20px;
+		padding: 20px;
+		border: 1px solid var(--border-color, #e0e0e0);
+		border-radius: 8px;
+		transition:
+			transform 0.2s,
+			box-shadow 0.2s;
+	}
+
+	.post-card:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	.post-card a {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.post-card h3 {
+		margin: 0 0 8px 0;
+		font-size: 1.3rem;
+	}
+
+	.post-date {
+		margin: 0 0 10px 0;
+		font-size: 0.9rem;
+		color: var(--text-secondary, #999);
+	}
+
+	.post-description {
+		margin: 0;
+		color: var(--text-secondary, #666);
+		font-size: 0.95rem;
+	}
+
+	.view-all {
+		display: inline-block;
+		text-align: center;
+		padding: 12px 24px;
+		border: 1px solid var(--border-color, #e0e0e0);
+		border-radius: 6px;
+		text-decoration: none;
+		transition: all 0.2s;
+	}
+
+	.view-all:hover {
+		background-color: var(--accent-color, #f0f0f0);
+	}
+
+	@media (max-width: 600px) {
+		.hero h1 {
+			font-size: 2rem;
+		}
+
+		.intro {
+			font-size: 1rem;
+		}
+	}
+</style>
