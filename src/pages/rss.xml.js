@@ -1,16 +1,22 @@
-import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getCollection } from 'astro:content';
+import type { APIContext } from 'astro';
 
-export async function GET(context) {
+export async function GET(context: APIContext) {
 	const posts = await getCollection('blog');
+
 	return rss({
-		title: SITE_TITLE,
-		description: SITE_DESCRIPTION,
-		site: context.site,
-		items: posts.map((post) => ({
-			...post.data,
-			link: `/blog/${post.id}/`,
-		})),
+		title: 'straypackets.com',
+		description: 'Thoughts slightly off center — software engineering, wisdom, and random observations.',
+		site: context.site!,
+		items: posts
+			.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+			.map((post) => ({
+				title: post.data.title,
+				pubDate: post.data.pubDate,
+				description: post.data.description,
+				link: `/blog/${post.slug}/`,
+			})),
+		customData: `<language>en-us</language>`,
 	});
 }
