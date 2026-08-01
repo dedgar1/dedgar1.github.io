@@ -12,4 +12,5 @@ From my current perspective, writing in July 2026, it feels like software develo
 
 Today, the solution is one prompt away. We solve problems quicker, but is something lost in this speed? Does the absence of struggle mean we lose some of the knowledge we would have gathered along the way? Do we pay attention to error logs when we can copy/paste issues from a terminal directly to an LLM? I've caught myself copying and pasting logs a few times without giving any thought as to the source of the issue.
 
-But I digress. My goal is to add my contribution, a little drop of knowledge, to the sea of information that is already available in this field. I promise to be genuine, write the content myself, and not fill this blog with AI-generated slop.
+What are the rules in this new world? What is the best way to use the tools for enhancing rather than outsourcing one's skill?
+My goal is to share my thoughts on AI and other topics of interest with the hope of contributing my drop of knowledge and ideas to the ocean of information currently online. I promise to be genuine and write the content myself without using AI (except for proofreading).
